@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TargetFit Jobs</title>
+<style>
+:root{--bg:#f3f5f1;--card:#fff;--ink:#17201c;--mute:#5d6a63;--line:#dfe5df;--brand:#0f6b5c;--brand2:#0b4f44;--ok:#157a4a;--okb:#e1f4e9;--warn:#9a6200;--warnb:#fdf1d6;--bad:#b3261e;--badb:#fde4e1;--info:#1b5fb3;--infob:#e3eefb;--r:14px}
+:root[data-theme=dark]{--bg:#0f1512;--card:#17201c;--ink:#e8eee9;--mute:#9aa8a0;--line:#2a3730;--brand:#3cc0a6;--brand2:#7fe0cb;--ok:#5fd394;--okb:#143a28;--warn:#f0b64a;--warnb:#3b2d0e;--bad:#ff8b80;--badb:#43171a;--info:#7db4f5;--infob:#14284a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;transition:background .25s,color .25s}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0 10px;gap:12px}
+.logo{font-size:1.5rem;font-weight:800;letter-spacing:-.03em}
+.logo b{color:var(--brand)}
+.logo small{display:block;font-size:.78rem;font-weight:500;color:var(--mute);letter-spacing:0}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 14px;border-radius:999px;cursor:pointer;transition:transform .15s,background .15s,border-color .15s}
+.btn:hover{border-color:var(--brand);transform:translateY(-1px)}
+.btn:active{transform:scale(.96)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+:root[data-theme=dark] .btn.pri{color:#06201a}
+.panel{position:sticky;top:0;z-index:20;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+.panel h2{margin:0 0 10px;font-size:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:.78rem;color:var(--mute);font-weight:600}
+.f input,.f select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.95rem;color:var(--ink);width:100%}
+.f input:focus,.f select:focus{border-color:var(--brand)}
+.relax{margin:10px 0 0;font-size:.85rem;color:var(--mute)}
+.row{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:10px}
+.chk{display:flex;gap:6px;align-items:center;font-size:.88rem;cursor:pointer}
+.chk input{accent-color:var(--brand);width:16px;height:16px}
+.tabs{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;align-items:center}
+.tab{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer}
+.tab[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.count{margin-left:auto;color:var(--mute);font-size:.88rem}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,470px),1fr));gap:14px;padding-bottom:50px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s,border-color .2s}
+.card:hover{box-shadow:0 8px 26px rgba(0,0,0,.1);border-color:var(--brand)}
+.card.exp{opacity:.72}
+.head{display:flex;gap:12px;justify-content:space-between}
+.head h3{margin:0;font-size:1.05rem;line-height:1.3}
+.org{color:var(--mute);font-size:.86rem}
+.ring{--p:0;flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c,var(--brand)) calc(var(--p)*1%),var(--line) 0);position:relative;transition:--p .4s}
+.ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--card)}
+.ring span{position:relative;font-weight:800;font-size:.9rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:.76rem;padding:2px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--mute)}
+.pill.v{background:var(--infob);color:var(--info);border-color:transparent;font-weight:600}
+.pill.g{background:var(--okb);color:var(--ok);border-color:transparent;font-weight:600}
+.badge{align-self:flex-start;font-weight:700;font-size:.85rem;padding:4px 11px;border-radius:8px}
+.badge.hot{background:var(--badb);color:var(--bad);animation:pulse 1.6s ease-in-out infinite}
+.badge.ok{background:var(--okb);color:var(--ok)}
+.badge.mid{background:var(--infob);color:var(--info)}
+.badge.dead{background:var(--bg);color:var(--mute)}
+@keyframes pulse{50%{box-shadow:0 0 0 5px transparent;transform:scale(1.02)}}
+.bar{height:7px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--ok);transition:width .6s}
+.bar.hot i{background:var(--bad)}
+.dates{display:flex;justify-content:space-between;font-size:.76rem;color:var(--mute);margin-top:3px}
+.why{display:flex;flex-direction:column;gap:5px}
+.tag{font-size:.82rem;padding:5px 10px;border-radius:8px;display:flex;gap:6px}
+.tag.ok{background:var(--okb);color:var(--ok)}
+.tag.warn{background:var(--warnb);color:var(--warn)}
+.tag.bad{background:var(--badb);color:var(--bad)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.acts a.btn{text-decoration:none;display:inline-block}
+.acts .sp{flex:1}
+.saved{background:var(--warnb);border-color:var(--warn);color:var(--warn)}
+.drawer{display:none;border-top:1px dashed var(--line);padding-top:10px}
+.drawer.open{display:block;animation:dr .25s}
+@keyframes dr{from{opacity:0;transform:translateY(-4px)}}
+.drawer p{margin:0 0 6px;font-size:.86rem;background:var(--bg);padding:6px 10px;border-radius:8px}
+.drawer p small{color:var(--mute)}
+.drawer form{display:flex;gap:6px;margin-top:8px}
+.drawer input{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:7px 10px;min-width:0}
+.empty{grid-column:1/-1;text-align:center;padding:40px 10px;color:var(--mute);background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,80px);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:999px;transition:transform .25s;z-index:50;font-size:.9rem}
+.toast.show{transform:translate(-50%,0)}
+.note{font-size:.76rem;color:var(--mute);text-align:center;padding:0 0 24px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">Target<b>Fit</b> Jobs<small>Only the openings you can actually apply to, with days left</small></div>
+    <button class="btn" id="theme" aria-label="Toggle light or dark theme">🌙 Dark</button>
+  </header>
+
+  <section class="panel" aria-label="Your eligibility details">
+    <h2>Fill in your details to see your fit</h2>
+    <div class="grid">
+      <label class="f">Age<input type="number" id="age" min="14" max="70" value="24"></label>
+      <label class="f">Category<select id="cat"><option>General</option><option selected>OBC</option><option>SC</option><option>ST</option><option>EWS</option></select></label>
+      <label class="f">Location<select id="loc"><option>All India</option><option>Remote</option><optgroup label="States"><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option></optgroup><optgroup label="Union Territories"><option>Andaman and Nicobar Islands</option><option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi NCR</option><option>Jammu and Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option></optgroup></select></label>
+      <label class="f">Sector<select id="sec"><option value="All">All</option><option value="Govt">Government / Sarkari</option><option value="Private">Private</option></select></label>
+      <label class="f">Qualification<select id="qual"><option value="1">10th / 12th</option><option value="2">Graduate</option><option value="3" selected>B.Tech / Diploma</option><option value="4">Post Graduate</option></select></label>
+      <label class="f">Work mode<select id="mode"><option value="Any">Any</option><option>Remote</option><option>Hybrid</option><option>On-Site</option></select></label>
+    </div>
+    <div class="relax" id="relax"></div>
+    <div class="row">
+      <label class="chk"><input type="checkbox" id="direct"> Direct apply only (no third-party redirect)</label>
+      <label class="chk"><input type="checkbox" id="elig"> Show 100% fit only</label>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab" data-view="feed" aria-pressed="true">Open jobs</button>
+    <button class="tab" data-view="saved" aria-pressed="false">Saved (<span id="sc">0</span>)</button>
+    <label class="chk" style="margin-left:6px"><input type="checkbox" id="past"> Past deadlines (for reference)</label>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main class="list" id="list" aria-live="polite"></main>
+  <p class="note">Sample listings for demonstration. Always confirm dates, age limits and fees in the official notification before applying.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+const DAY=864e5;
+const now=()=>Date.now();
+const endOf=n=>{const d=new Date();d.setHours(23,59,59,0);return d.getTime()+n*DAY};
+// qual: minimum rank (1=10th/12th, 2=Graduate, 3=B.Tech/Diploma, 4=PG); tech: needs tech degree or PG
+const J=[
+{id:1,t:"SSC CHSL 2026 (LDC / DEO / PA)",o:"Staff Selection Commission",s:"Govt",loc:"All India",mode:"On-Site",q:1,ql:"12th Pass",age:27,left:3,total:30,direct:true,ver:"ssc.gov.in",url:"https://ssc.gov.in",fee:"Rs 100; free for SC/ST/women",cm:["Official syllabus attached in notification","No fee for SC/ST","Exam centres available nationwide"]},
+{id:2,t:"Junior Court Assistant",o:"Supreme Court of India",s:"Govt",loc:"Delhi NCR",mode:"On-Site",q:2,ql:"Graduate",age:30,left:15,total:30,direct:true,ver:"sci.gov.in",url:"https://www.sci.gov.in",fee:"Rs 1000; Rs 250 for SC/ST",cm:["Typing test is speed-based, practise 35 wpm","Delhi posting only"]},
+{id:3,t:"Probationary / Agriculture Officer (AO)",o:"Public Sector Bank (IBPS)",s:"Govt",loc:"All India",mode:"On-Site",q:2,ql:"Graduate (relevant stream)",age:30,left:30,total:45,direct:false,ver:"ibps.in",url:"https://www.ibps.in",fee:"Rs 850; Rs 175 for SC/ST/PwBD",cm:["Applies through the IBPS common portal","Interview weightage is 20%"]},
+{id:4,t:"Engineering Services Exam (ESE)",o:"UPSC",s:"Govt",loc:"All India",mode:"On-Site",q:3,tech:true,ql:"B.E. / B.Tech",age:30,left:12,total:28,direct:true,ver:"upsc.gov.in",url:"https://upsc.gov.in",fee:"Rs 200; free for women/SC/ST/PwBD",cm:["Prelims + Mains + Interview","One-time registration (OTR) needed first"]},
+{id:5,t:"First Division Assistant (FDA)",o:"Karnataka Public Service Commission",s:"Govt",loc:"Karnataka",mode:"On-Site",q:2,ql:"Graduate",age:35,left:21,total:40,direct:true,ver:"kpsc.kar.nic.in",url:"https://kpsc.kar.nic.in",fee:"Rs 600; Rs 300 for OBC",cm:["Kannada language test is compulsory","Domicile certificate required"]},
+{id:6,t:"Police Constable Bharti",o:"Maharashtra Police",s:"Govt",loc:"Maharashtra",mode:"On-Site",q:1,ql:"12th Pass",age:28,left:5,total:25,direct:true,ver:"mahapolice.gov.in",url:"https://mahapolice.gov.in",fee:"Rs 450; Rs 350 for reserved",cm:["Physical test details in Annexure B","Check district-wise vacancies"]},
+{id:7,t:"Constable (Civil Police)",o:"UP Police Recruitment Board",s:"Govt",loc:"Uttar Pradesh",mode:"On-Site",q:1,ql:"12th Pass",age:22,left:18,total:35,direct:true,ver:"uppbpb.gov.in",url:"https://uppbpb.gov.in",fee:"Rs 400",cm:["Upper age 22 for General, relaxations as per UP rules"]},
+{id:8,t:"Systems Engineer (Fresher)",o:"Infosys",s:"Private",loc:"All India",mode:"Hybrid",q:3,tech:true,ql:"B.E. / B.Tech",age:99,left:25,total:60,direct:true,ver:"infosys.com/careers",url:"https://www.infosys.com/careers/",fee:"No application fee",cm:["Online assessment followed by technical round","Offers 2026 batch and earlier"]},
+{id:9,t:"Digital Engineer",o:"TCS",s:"Private",loc:"All India",mode:"On-Site",q:3,tech:true,ql:"B.E. / B.Tech / MCA",age:99,left:4,total:20,direct:false,ver:"tcs.com/careers",url:"https://www.tcs.com/careers",fee:"No application fee",cm:["Apply via TCS NextStep portal","Coding test is mandatory"]},
+{id:10,t:"Frontend Developer (React)",o:"Product startup",s:"Private",loc:"Remote",mode:"Remote",q:3,ql:"Diploma / B.Tech",age:99,left:14,total:21,direct:true,ver:"Company career page",url:"https://example.com/careers",fee:"No application fee",cm:["Take-home task of about 3 hours","Pays in INR, flexible hours"]},
+{id:11,t:"Data Analyst",o:"Fintech company, Bengaluru",s:"Private",loc:"Karnataka",mode:"Hybrid",q:2,ql:"Graduate (any stream)",age:99,left:9,total:30,direct:true,ver:"Company career page",url:"https://example.com/careers",fee:"No application fee",cm:["SQL and Excel test in round one"]},
+{id:12,t:"Customer Support Associate (Voice)",o:"BPO / Services firm",s:"Private",loc:"Remote",mode:"Remote",q:1,ql:"12th Pass",age:99,left:7,total:15,direct:false,ver:"Unverified source",url:"https://example.com/jobs",fee:"No application fee",cm:["Joining through a staffing partner, ask about notice pay"]},
+{id:13,t:"Scientist / Technical Assistant (CEPTAM)",o:"DRDO",s:"Govt",loc:"Delhi NCR",mode:"On-Site",q:3,tech:true,ql:"Diploma / B.Sc / B.Tech",age:28,left:-6,total:30,direct:true,ver:"drdo.gov.in",url:"https://www.drdo.gov.in",fee:"Rs 100",cm:["Window closed, watch for the next cycle"]}
+].map(j=>({...j,end:endOf(j.left),cm:j.cm.map(x=>({u:"Applicant",x}))}));
+
+const $=id=>document.getElementById(id);
+const RELAX={General:0,OBC:3,SC:5,ST:5,EWS:0};
+let view="feed",open=new Set(),saved=new Set();
+try{saved=new Set(JSON.parse(localStorage.getItem("tf_saved")||"[]"))}catch(e){}
+try{const t=localStorage.getItem("tf_theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+if(!document.documentElement.dataset.theme&&matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark";
+
+const daysLeft=j=>Math.ceil((j.end-now())/DAY);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=ts=>new Date(ts).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+
+function fit(j){
+  const age=+$("age").value,cat=$("cat").value,rel=RELAX[cat],qr=+$("qual").value;
+  const tags=[];let checks=0,pass=0;
+  // Age
+  checks++;
+  if(j.age>=99){pass++;tags.push(["ok","Age Verified: no upper age limit for this role"])}
+  else{
+    const lim=j.age+rel;
+    if(!age)tags.push(["warn","Enter your age to check eligibility"]);
+    else if(age<=j.age){pass++;tags.push(["ok",`Age Verified: Your Age ${age} | Upper Limit ${j.age} (General)`])}
+    else if(age<=lim){pass++;tags.push(["ok",`Age Verified: Your Age ${age} | Upper Limit ${lim} (${cat})`]);tags.push(["ok",`Category Relaxation Applied: +${rel} Yrs for ${cat}`])}
+    else tags.push(["bad",`Age Not Met: Your Age ${age} | Upper Limit ${lim} (${cat}${rel?` incl. +${rel}`:""})`]);
+  }
+  // Qualification
+  checks++;
+  const techOk=!j.tech||qr===3||qr===4;
+  if(qr>=j.q&&techOk){pass++;tags.push(["ok",`Qualification Matched: ${j.ql}`])}
+  else tags.push(["bad",`Qualification Needed: ${j.ql}`]);
+  // Location
+  const L=$("loc").value;checks++;
+  if(L==="All India"||j.loc==="All India"||j.loc==="Remote"||j.loc===L){pass++;tags.push(["ok",`Location Fit: ${j.loc}`])}
+  else tags.push(["warn",`Location: posting is in ${j.loc}`]);
+  // Optional filters count only when set
+  if($("mode").value!=="Any"){checks++;if(j.mode===$("mode").value){pass++;tags.push(["ok",`Work Mode Matched: ${j.mode}`])}else tags.push(["warn",`Work Mode: this job is ${j.mode}`])}
+  if($("sec").value!=="All"){checks++;if(j.s===$("sec").value)pass++;}
+  return {score:Math.round(pass/checks*100),tags,ageOk:j.age>=99||age<=j.age+rel};
+}
+
+function card(j,f){
+  const d=daysLeft(j),exp=d<=0,hot=!exp&&d<=5;
+  const total=Math.max(1,Math.round((j.end-(j.end-j.total*DAY))/DAY));
+  const pct=exp?100:Math.min(100,Math.max(0,Math.round((1-d/total)*100)));
+  const b=exp?`<span class="badge dead">Closed on ${fmt(j.end)}</span>`
+    :hot?`<span class="badge hot">🔥 Closing in ${d} Day${d>1?"s":""}!</span>`
+    :`<span class="badge ${d>14?"ok":"mid"}">⏳ ${d} Days Left to Apply</span>`;
+  const c=f.score>=100?"var(--ok)":f.score>=70?"var(--info)":"var(--warn)";
+  const isS=saved.has(j.id),o=open.has(j.id);
+  const msg=encodeURIComponent(`${j.t} (${j.o}) closes ${fmt(j.end)}${exp?"":`, only ${d} day(s) left`}. Apply: ${j.url}`);
+  return `<article class="card ${exp?"exp":""}" data-id="${j.id}">
+  <div class="head"><div><h3>${esc(j.t)}</h3><div class="org">${esc(j.o)}</div></div>
+  <div class="ring" style="--p:${f.score};--c:${c}" title="Target Fit Score"><span>${f.score}%</span></div></div>
+  <div class="meta"><span class="pill">${j.s==="Govt"?"Sarkari":"Private"}</span><span class="pill">📍 ${esc(j.loc)}</span><span class="pill">${esc(j.mode)}</span>
+  <span class="pill ${j.ver.includes("Unverified")?"":"v"}">${j.ver.includes("Unverified")?"⚠ Not verified":"✔ Verified: "+esc(j.ver)}</span>
+  ${j.direct?'<span class="pill g">Direct apply</span>':'<span class="pill">Via partner portal</span>'}<span class="pill">Fee: ${esc(j.fee)}</span></div>
+  ${b}
+  <div><div class="bar ${hot?"hot":""}" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Time elapsed"><i style="width:${pct}%"></i></div>
+  <div class="dates"><span>${pct}% of window elapsed</span><span>Last date: ${fmt(j.end)}</span></div></div>
+  <div class="why"><strong style="font-size:.82rem">${f.score}% fit. Why you fit:</strong>${f.tags.map(t=>`<div class="tag ${t[0]}">${t[0]==="ok"?"✓":t[0]==="bad"?"✕":"!"} <span>${esc(t[1])}</span></div>`).join("")}</div>
+  <div class="acts">
+    <a class="btn pri" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer">${exp?"View notification":"Apply on official site"}</a>
+    <button class="btn ${isS?"saved":""}" data-a="save" aria-pressed="${isS}">${isS?"★ Saved":"☆ Save & track"}</button>
+    <span class="sp"></span>
+    <a class="btn" href="https://wa.me/?text=${msg}" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">WhatsApp</a>
+    <a class="btn" href="https://t.me/share/url?url=${encodeURIComponent(j.url)}&text=${msg}" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram">Telegram</a>
+    <button class="btn" data-a="fb" aria-expanded="${o}">💬 Feedback (${j.cm.length})</button></div>
+  <div class="drawer ${o?"open":""}">${j.cm.map(c=>`<p>${esc(c.x)} <small>by ${esc(c.u)}</small></p>`).join("")}
+    <form data-a="add"><input name="t" maxlength="140" placeholder="Share a tip: fee, syllabus, centres..." aria-label="Your feedback"><button class="btn">Post</button></form></div>
+  </article>`;
+}
+
+function render(){
+  const age=+$("age").value,cat=$("cat").value,rel=RELAX[cat];
+  $("relax").textContent=rel?`${cat} relaxation: +${rel} years added to the general upper age limit for government posts.`:`${cat}: no age relaxation, general upper age limits apply.`;
+  const showPast=$("past").checked;
+  let rows=J.map(j=>({j,f:fit(j)})).filter(({j,f})=>{
+    if(view==="saved")return saved.has(j.id);
+    if(daysLeft(j)<=0&&!showPast)return false;
+    if($("sec").value!=="All"&&j.s!==$("sec").value)return false;
+    if($("mode").value!=="Any"&&j.mode!==$("mode").value)return false;
+    if($("direct").checked&&!j.direct)return false;
+    if($("elig").checked&&f.score<100)return false;
+    return true;
+  });
+  // closed jobs sink to bottom; then by fit, then by urgency
+  rows.sort((a,b)=>{const ea=daysLeft(a.j)<=0,eb=daysLeft(b.j)<=0;return ea-eb||b.f.score-a.f.score||a.j.end-b.j.end});
+  $("count").textContent=`${rows.length} job${rows.length===1?"":"s"} shown`;
+  $("sc").textContent=saved.size;
+  $("list").innerHTML=rows.length?rows.map(r=>card(r.j,r.f)).join(""):`<div class="empty">${view==="saved"?"No saved jobs yet. Tap ☆ Save & track on any card.":"No jobs match these filters. Try another location, work mode or turn off “100% fit only”."}</div>`;
+}
+
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),1800)}
+
+$("list").addEventListener("click",e=>{
+  const b=e.target.closest("[data-a]");if(!b)return;
+  const id=+b.closest(".card").dataset.id;
+  if(b.dataset.a==="save"){
+    saved.has(id)?saved.delete(id):saved.add(id);
+    try{localStorage.setItem("tf_saved",JSON.stringify([...saved]))}catch(x){}
+    toast(saved.has(id)?"Saved. We'll keep the countdown on top":"Removed from saved");render();
+  }else if(b.dataset.a==="fb"){
+    open.has(id)?open.delete(id):open.add(id);
+    const dr=b.closest(".card").querySelector(".drawer");dr.classList.toggle("open");b.setAttribute("aria-expanded",open.has(id));
+  }
+});
+$("list").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=+e.target.closest(".card").dataset.id,v=e.target.t.value.trim();if(!v)return;
+  J.find(j=>j.id===id).cm.push({u:"You",x:v});open.add(id);toast("Thanks, your tip is posted");render();
+});
+document.querySelectorAll(".panel select,.panel input,#past").forEach(el=>el.addEventListener("input",render));
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  view=t.dataset.view;document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",x===t));render();
+}));
+function themeLabel(){$("theme").textContent=document.documentElement.dataset.theme==="dark"?"☀️ Light":"🌙 Dark"}
+$("theme").addEventListener("click",()=>{
+  const n=document.documentElement.dataset.theme==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=n;try{localStorage.setItem("tf_theme",n)}catch(e){}themeLabel();
+});
+themeLabel();render();
+setInterval(render,60000); // keep countdowns live
+})();
+</script>
+</body>
+</html>
